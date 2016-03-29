@@ -1,0 +1,7 @@
+name 'ls_windows_dns'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures ls_windows_dns'
+long_description 'Installs/Configures ls_windows_dns'
+version '0.1.1'
