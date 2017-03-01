@@ -13,6 +13,19 @@ describe 'ls_windows_dns::default' do
       runner.converge(described_recipe)
     end
 
+    before do
+      script = <<-EOH
+        try{
+            $NIC = Get-NetAdapter | where {$_.Status -eq "Up"}
+            $dnsServers = $NIC | Get-DnsClientServerAddress -AddressFamily IPv4
+            $CorrectDNSServers = #{node['ls_windows_dns']['dns_servers']}
+        }
+        catch{}
+        (Compare-Object $dnsServers.ServerAddresses $CorrectDNSServers -sync 0).Length -eq 0
+      EOH
+      stub_command(script).and_return(true)
+    end
+
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
