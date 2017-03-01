@@ -14,14 +14,7 @@ describe 'ls_windows_dns::default' do
     end
 
     before do
-      script = "
-        try{
-            $NIC = Get-NetAdapter | where {$_.Status -eq \"Up\"}
-            $dnsServers = $NIC | Get-DnsClientServerAddress -AddressFamily IPv4
-            $CorrectDNSServers = \"\'10.0.0.1\',10.0.0.2\"
-        }
-        catch{}
-        (Compare-Object $dnsServers.ServerAddresses $CorrectDNSServers -sync 0).Length -eq 0"
+      script = '(Compare-Object $dnsServers.ServerAddresses $CorrectDNSServers -sync 0).Length -eq 0'
       stub_command(script).and_return(true)
     end
 
