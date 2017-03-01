@@ -18,7 +18,7 @@ describe 'ls_windows_dns::default' do
         try{
             $NIC = Get-NetAdapter | where {$_.Status -eq "Up"}
             $dnsServers = $NIC | Get-DnsClientServerAddress -AddressFamily IPv4
-            $CorrectDNSServers = #{node['ls_windows_dns']['dns_servers']}
+            $CorrectDNSServers = "'10.0.0.1',10.0.0.2"
         }
         catch{}
         (Compare-Object $dnsServers.ServerAddresses $CorrectDNSServers -sync 0).Length -eq 0
